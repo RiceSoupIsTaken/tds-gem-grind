@@ -12,8 +12,8 @@ if workspace:FindFirstChild("Elevators") then
         [1] = "Multiplayer",
         [2] = "v2:start",
         [3] = {
-            ["mode"] = "hardcore",
-            ["count"] = 1
+            ["count"] = 1,
+            ["mode"] = "hardcore"
         }
     }
     remoteFunction:InvokeServer(unpack(args))
@@ -72,12 +72,12 @@ safeInvoke({
 })
 task.wait(1)
 
--- Vote for Crossroads
+-- Vote for Wrecked Battlefield II
 safeFire({
     "LobbyVoting",
     "Vote",
     "Crossroads",
-    Vector3.new(15.260380744934082, 9.839303970336914, 57.945106506347656) -- Your verified working coordinate
+    Vector3.new(15.260380744934082, 9.839303970336914, 57.945106506347656)
 })
 task.wait(1)
 
@@ -94,9 +94,7 @@ local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
 local humanoid = character:WaitForChild("Humanoid")
 task.wait(2)
 
----
-## In-Match Tower Placement (Crossroads - Pyromancer & Crook Boss)
----
+-- --- In-Match Tower Placement (Wrecked Battlefield II) ---
 local placementSequence = {
     -- Pyromancer cost UPDATED to 1200
     { args = { "Troops", "Pl\208\176ce", { Rotation = CFrame.new(), Position = Vector3.new(-3.2550888061523438, 1.0000081062316895, -3.3469676971435547) }, "Pyromancer" }, cost = 1200 },
@@ -112,12 +110,10 @@ for _, step in ipairs(placementSequence) do
     safeInvoke(step.args, step.cost)
 end
 
----
-## Parallel Upgrade Loop and Timers
----
+-- --- Parallel Upgrade Loop and Timers ---
 local upgradeDone = false
 task.spawn(function()
-    local towerFolder = workspace:WaitForChild("Towers", 120)
+    local towerFolder = workspace:WaitForChild("Towers", 600)
     if not towerFolder then return end
     local maxedTowers = {}
 
@@ -146,26 +142,10 @@ task.spawn(function()
     end
 end)
 
-task.wait(120) -- Main gameplay timer
+task.wait(400)
 
 upgradeDone = true
 task.wait(1)
 
--- --- End of Round: Sell Towers and Teleport ---
-local towerFolder = workspace:WaitForChild("Towers", 10)
-if towerFolder then
-    local towersToSell = towerFolder:GetChildren()
-    for _, tower in ipairs(towersToSell) do
-        local args = {
-            "Troops",
-            "Sell",
-            {
-                Troop = tower
-            }
-        }
-        safeInvoke(args)
-    end
-end
-task.wait(2)
 
 TeleportService:Teleport(3260590327)
